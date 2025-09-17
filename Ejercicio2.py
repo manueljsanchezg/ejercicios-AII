@@ -121,7 +121,7 @@ def seleccion():
     ttk.Button(ventana_seleccion_ordenacion, text="Listar", command=lambda: lista_ordenada(ventana_seleccion_ordenacion, opcion_seleccionada.get())).pack()
 
 def lista_ordenada(ventana, opcion):
-    libros = cur.execute(f"SELECT * FROM BOOK ORDER BY {opcion}").fetchall()
+    libros = cur.execute(f"SELECT * FROM BOOK ORDER BY ?", (f"{opcion}",)).fetchall()
     ventana_libros_ordenados = tk.Toplevel(ventana)
     ventana_libros_ordenados.title("Libros ordenador")
     ventana_libros_ordenados.geometry("400x400")
@@ -152,7 +152,7 @@ def buscar_titulo():
     ttk.Button(ventana_seleccion_titulo, text="Listar", command=lambda: filta_por_titulo(ventana_seleccion_titulo, titulo.get())).pack()
 
 def filta_por_titulo(ventana, titulo):
-    libros = cur.execute(f"SELECT * FROM BOOK WHERE TITLE LIKE '%{titulo}%'").fetchall()
+    libros = cur.execute(f"SELECT * FROM BOOK WHERE TITLE LIKE ?", (f"%{titulo}%",)).fetchall()
     ventana_libros_ordenados = tk.Toplevel(ventana)
     ventana_libros_ordenados.title("Libros ordenador")
     ventana_libros_ordenados.geometry("400x400")
